@@ -3,36 +3,32 @@ import mongoose from "mongoose";
 const usuarioSchema = new mongoose.Schema({
     nombre: {
         type: String,
-        required: true,
-        minLength: 3,
-        maxLength: 50
-    },
-    email: {
+        required: [true, "El nombre es obligatorio"],
+        minLength: [2, "Debe ingresar como mínimo 2 caracteres para el nombre de usuario."],
+        maxLength: [50, "Debe ingresar como máximo 50 caracteres para el nombre de usuario."]
+      },
+      email: {
         type: String,
-        required: true,
-        unique: true,
-        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    },
-    rol: {
+        required: [true, "El email es obligatorio"],
+        match: [/^\S+@\S+$/i, "El email ingresado no es válido"]
+      },
+      password: {
         type: String,
-        required: true,
-        enum: ['Usuario', 'Administrador']
-    },
-    contraseña: {
+        required: [true, "La contraseña es obligatoria"],
+        minLength: [6, "La contraseña debe tener al menos 6 caracteres"]
+      },
+      confirmarContraseña: {
         type: String,
-        required: true,
-        minLength: 6
-    },
-    confirmarContraseña: {
-        type: String,
-        required: true,
         validate: {
-            validator: function(v) {
-                return this.contraseña === v;
-            },
-            message: props => `La contraseña y la confirmación de la contraseña no coinciden`
+          validator: function(value) {
+            return value === this.password;
+          },
+          message: "Las contraseñas no coinciden"
         }
-    }
+      },
+      rol: {
+        type: String 
+      }
 });
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);
