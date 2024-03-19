@@ -38,6 +38,24 @@ export const crearUsuario = async (req, res) => {
       });
     }
   };
+
+  export const borrarUsuario = async (req, res) => {
+    try {
+      const usuarioBuscado = await Usuario.findById(req.params.id);
+      if (!usuarioBuscado) {
+        return res.status(404).json({
+          mensaje: "No se pudo eliminar el usuario, el id es incorrecto",
+        });
+      }
+      await Usuario.findByIdAndDelete(req.params.id);
+      res.status(200).json({ mensaje: "El usuario fue eliminado correctamente" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        mensaje: "ocurrio un error al intentar eliminar el usuario",
+      });
+    }
+  };
   
 
   
