@@ -22,6 +22,16 @@ const usuarioSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 6
+    },
+    confirmarContraseña: {
+        type: String,
+        required: true,
+        validate: {
+            validator: function(v) {
+                return this.contraseña === v;
+            },
+            message: props => `La contraseña y la confirmación de la contraseña no coinciden`
+        }
     }
 });
 
