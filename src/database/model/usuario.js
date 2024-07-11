@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const usuarioSchema = new mongoose.Schema({
-    nombre: {
+    nombreUsuario: {
         type: String,
         required: true,
         minLength: 3,
@@ -16,9 +16,9 @@ const usuarioSchema = new mongoose.Schema({
     rol: {
         type: String,
         required: true,
-        enum: ['Usuario', 'Administrador']
+        enum: ['usuario', 'admin']
     },
-    contraseña: {
+    password: {
         type: String,
         required: true,
         minLength: 6
