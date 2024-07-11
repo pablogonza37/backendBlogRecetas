@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const usuarioSchema = new mongoose.Schema({
-    nombre: {
+    nombreUsuario: {
         type: String,
         required: [true, "El nombre es obligatorio"],
         minLength: [2, "Debe ingresar como mínimo 2 caracteres para el nombre de usuario."],
@@ -14,10 +14,10 @@ const usuarioSchema = new mongoose.Schema({
       },
       password: {
         type: String,
-        required: [true, "La contraseña es obligatoria"],
-        minLength: [6, "La contraseña debe tener al menos 6 caracteres"]
-      },
-      confirmarContraseña: {
+        required: true,
+        enum: ['usuario', 'admin']
+    },
+    password: {
         type: String,
         validate: {
           validator: function(value) {
