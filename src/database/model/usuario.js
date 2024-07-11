@@ -12,23 +12,17 @@ const usuarioSchema = new mongoose.Schema({
         required: [true, "El email es obligatorio"],
         match: [/^\S+@\S+$/i, "El email ingresado no es válido"]
       },
-      password: {
+      rol: {
         type: String,
         required: true,
         enum: ['usuario', 'admin']
     },
     password: {
         type: String,
-        validate: {
-          validator: function(value) {
-            return value === this.password;
-          },
-          message: "Las contraseñas no coinciden"
-        }
+        required: [true, "La contraseña es obligatoria"],
+        minLength: [6, "La contraseña debe tener al menos 6 caracteres"]
       },
-      rol: {
-        type: String 
-      }
+      
 });
 
 const Usuario = mongoose.model('Usuario', usuarioSchema);
